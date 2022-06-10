@@ -1,0 +1,66 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Fizz Buzz";
+}
+
+<div>
+    <h1 class="display-4 text-center">Welcome @Model.Name</h1>
+    @*<form method="post">
+    <label asp-for="FizzBuzz.Number"></label>
+    <input asp-for="FizzBuzz.Number" /><br />
+    <button type="submit">Zatwierdź</button>
+    </form>*@
+
+    <form class="needs-validation" method="post" novalidate>
+        <div class="form-group mb-2">
+            <label class="mb-1" for="FizzBuzz.Number">Twój szczęśliwy numerek</label>
+            <input type="number" class="form-control" id="FizzBuzz.Number" placeholder="Wprowadź liczbę całkowitą" required>
+        </div>
+
+        <div class="mb-2">
+            <button id="submitButton" type="button" class="btn btn-primary" onclick="submitButtonClicked()">Zatwierdź</button>
+        </div>
+
+        <div id="response">
+        </div>
+    </form>
+
+    <script>
+        function submitButtonClicked() {
+            const alert = document.getElementById('response');
+            const number = document.getElementById('FizzBuzz.Number');
+            console.log(number.value);
+
+            if (isNaN(number.value) || number.value === null || number.value === '' || number.value < 1 || number.value > 1000 || !isInt(number.value)) {
+                console.log("a1")
+                alert.className = 'alert alert-danger';
+                alert.innerHTML = 'Proszę wprowadzić liczbę całkowitą z zakresu od 1 do 1000!';
+            }
+            else {
+                console.log("a3")
+                alert.innerHTML = '';
+                alert.className = 'alert alert-success';
+
+                if (number.value % 3 === 0) {
+                    console.log("b1");
+                    alert.innerHTML = 'Fizz';
+                }
+                if (number.value % 5 === 0) {
+                    console.log("b2");
+                    alert.innerHTML += 'Buzz';
+                }
+                if (number.value % 3 != 0 && number.value % 5 != 0) {
+                    console.log("b3");
+                    alert.className = 'alert alert-danger';
+                    alert.innerHTML = 'Liczba: ' + number.value + ' nie spełnia wymogów FizzBuzz';
+                }
+            }
+        }
+
+        function isInt(value) {
+            return !isNaN(value) && parseInt(Number(value)) == value && !isNaN(parseInt(value, 10));
+        }
+    </script>
+</div>
+
